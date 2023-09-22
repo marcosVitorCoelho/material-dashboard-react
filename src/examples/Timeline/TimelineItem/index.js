@@ -29,7 +29,7 @@ import { useTimeline } from "examples/Timeline/context";
 // Custom styles for the TimelineItem
 import timelineItem from "examples/Timeline/TimelineItem/styles";
 
-function TimelineItem({ color, icon, title, dateTime, description, lastItem }) {
+function TimelineItem({ color, icon, title, description, lastItem }) {
   const isDark = useTimeline();
 
   return (
@@ -55,11 +55,6 @@ function TimelineItem({ color, icon, title, dateTime, description, lastItem }) {
         <MDTypography variant="button" fontWeight="medium" color={isDark ? "white" : "dark"}>
           {title}
         </MDTypography>
-        <MDBox mt={0.5}>
-          <MDTypography variant="caption" color={isDark ? "secondary" : "text"}>
-            {dateTime}
-          </MDTypography>
-        </MDBox>
         <MDBox mt={2} mb={1.5}>
           {description ? (
             <MDTypography variant="button" color={isDark ? "white" : "dark"}>
@@ -93,7 +88,6 @@ TimelineItem.propTypes = {
   ]),
   icon: PropTypes.node.isRequired,
   title: PropTypes.string.isRequired,
-  dateTime: PropTypes.string.isRequired,
   description: PropTypes.string,
   lastItem: PropTypes.bool,
 };
