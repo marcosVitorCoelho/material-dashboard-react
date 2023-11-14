@@ -26,7 +26,7 @@ export const buildAxios = (config?: AxiosRequestConfig) => {
       const newCookies = new Cookies();
       const token = newCookies.get("accesstoken");
       if (token) {
-        config.headers.Authorization = `bearer ${token}`;
+        config.headers.Authorization = `Bearer ${token}`;
       } else {
         return config;
       }
@@ -41,5 +41,5 @@ export const buildAxios = (config?: AxiosRequestConfig) => {
 };
 
 export const apiBase = buildAxios({
-  baseURL: process.env.API_URL,
+  baseURL: "http://localhost:8080",
 });

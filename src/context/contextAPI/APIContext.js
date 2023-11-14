@@ -2,14 +2,17 @@ import {createContext } from "react";
 import { redirect } from "react-router-dom";
 import PropTypes from "prop-types";
 import { apiBase } from "../../services/api.ts";
+import Cookies from "universal-cookie";
+
 const APIContext = createContext();
 
 const APIContextProvider = ({children}) => {
     const authUser = async (values) => {
         const newCookies = new Cookies();
+        console.log(process.env.API_URL)
         try {
-          const {data} = await apiBase.post<IUserLoginResponse>("/user/login", values);
-          newCookies.set(accesstoken, data.token);
+          const {data} = apiBase.post("/auth/login", values);
+          newCookies.set("accesstoken", data.token);
           redirect("/dashboard");
           return data;
         } catch (error) {

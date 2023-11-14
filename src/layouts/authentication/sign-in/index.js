@@ -25,11 +25,30 @@ import BasicLayout from "layouts/authentication/components/BasicLayout";
 
 // Images
 import bgImage from "assets/images/bg-sign-in-basic.jpeg";
+import { useContext } from "react";
+import APIContext from "context/contextAPI/APIContext";
 
 function Basic() {
-  const [rememberMe, setRememberMe] = useState(false);
 
-  const handleSetRememberMe = () => setRememberMe(!rememberMe);
+  const {authUser} = useContext(APIContext)
+
+  const [userData, setUserData] = useState({
+    login: '',
+    password: ''
+  })
+
+  const onInputChange = (fieldName, value) => {
+    console.log(userData)
+    setUserData((prevData) => ({
+      ...prevData,
+      [fieldName]: value,
+    }));
+  }
+
+  const handleSubmit = () => {
+    if(userData.password === '' && userData.login === '') return alert("Preencha suas credenciais")
+    authUser(userData)
+  }
 
   return (
     <BasicLayout image={bgImage}>
@@ -52,13 +71,13 @@ function Basic() {
         <MDBox pt={4} pb={3} px={3}>
           <MDBox component="form" role="form">
             <MDBox mb={2}>
-              <MDInput type="email" label="Email" fullWidth />
+              <MDInput type="email" label="Email" fullWidth onChange={(e) => onInputChange("login", e.target.value)}/>
             </MDBox>
             <MDBox mb={2}>
-              <MDInput type="password" label="Password" fullWidth />
+              <MDInput type="password" label="Password" fullWidth onChange={(e) => onInputChange("password", e.target.value)}/>
             </MDBox>
             <MDBox mt={4} mb={1}>
-              <MDButton variant="gradient" color="info" fullWidth>
+              <MDButton variant="gradient" color="info" fullWidth onClick={handleSubmit}>
                 sign in
               </MDButton>
             </MDBox>
